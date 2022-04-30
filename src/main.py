@@ -1,6 +1,6 @@
 import os
 from xmlrpc.client import DateTime
-
+import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
@@ -44,7 +44,7 @@ def get_plot_data(plot_name, attribute, df):
     # boxplot_df[factor_config[1]] = data[1]
 
     boxplot_df = pd.DataFrame(daaata)
-    print(data)
+    # print(data)
     print(boxplot_df)
 
     myFig = plt.figure()
@@ -57,13 +57,17 @@ def check_equal_dates(date_1: DateTime, date_2: DateTime):
 
 frame = []
 # os.chdir("../")
-data_folder = 'CGI-alles/Data/PMP Data/'
+data_folder = 'src/combined_data/'
 
 df = pd.DataFrame(frame)
 
-for datafile in os.listdir(data_folder):
+files = os.listdir(data_folder)
+for datafile in files.sort():
     print(datafile)
-    df = pd.read_csv(data_folder + datafile, sep=";")
+    df = pd.read_csv(data_folder + datafile)
+
+    df['Value'] = df['Value'].apply(lambda x:type(x) in [int, np.int64, float, np.float64])
+    # print(df["Attribuut"].unique())
     get_plot_data("plt1", "Attribuut", df)
     get_plot_data("plt2", "Assetnaam", df)
 
