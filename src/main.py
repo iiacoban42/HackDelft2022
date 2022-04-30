@@ -17,8 +17,12 @@ df = pd.DataFrame(frame)
 
 for datafile in os.listdir(data_folder):
     print(datafile)
-
     df = pd.read_csv(data_folder + datafile, sep=";")
+    # attr = df["Attribuut"].unique()
+    # asset = df["Assetnaam"].unique()
+    # print(attr)
+    # print(asset)
+
     print(df)
     x = list(range(0, len(df)))
     tstamp = df['Timestamp'][0]
