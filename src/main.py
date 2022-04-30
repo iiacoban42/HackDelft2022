@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
+import re
+
 
 
 def get_boxplot(exp, data, labels):
@@ -62,13 +64,13 @@ data_folder = 'src/combined_data/'
 df = pd.DataFrame(frame)
 
 files = os.listdir(data_folder)
-for datafile in files.sort():
-    print(datafile)
-    df = pd.read_csv(data_folder + datafile)
 
-    df['Value'] = df['Value'].apply(lambda x:type(x) in [int, np.int64, float, np.float64])
-    # print(df["Attribuut"].unique())
-    get_plot_data("plt1", "Attribuut", df)
-    get_plot_data("plt2", "Assetnaam", df)
+regex = ".*[a-zA-Z].*"
 
-    break
+
+df = pd.read_csv("src/combined_data/AH$2113_data.csv")
+
+df['Value'] = df['Value'].apply(lambda x: not re.match(regex, str(x))).index
+# print(df["Attribuut"].unique())
+get_plot_data("plt1", "Attribuut", df)
+# get_plot_data("plt2", "Assetnaam", df)
